@@ -21,11 +21,15 @@ RUN chmod -R 777 /var/log/shiny-server
 EXPOSE 3838
 
 # Define environment variable
-# ENV NAME World
 
 COPY /shiny-server.conf /etc/shiny-server/shiny-server.conf
 
-# Run shiny when the container launches
-# CMD ["/usr/bin/shiny-server.sh"]
-# ENTRYPOINT ["shiny-server.sh"]
-ENTRYPOINT ["/usr/bin/shiny-server.sh"]
+ENV APP_ROOT=/usr/bin
+ENV PATH=${APP_ROOT}/bin:${PATH} HOME=${APP_ROOT}
+COPY bin/ ${APP_ROOT}/bin/
+RUN chmod -R u+x ${APP_ROOT}/bin && \
+    chgrp -R 0 ${APP_ROOT} && \
+    chmod -R g=u ${APP_ROOT} /etc/passwd
+ENTRYPOINT [ "uid_entrypoint" ]
+CMD run 
+
