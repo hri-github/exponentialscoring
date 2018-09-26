@@ -11,11 +11,13 @@ WORKDIR /srv/shiny-server
 # COPY shiny-server.sh /usr/bin/shiny-server.sh
 
 # Install any needed packages from CRAN
-RUN sudo R -e "install.packages(c('shiny', 'rmarkdown'), repos='https://cran.rstudio.com/')"
+# RUN sudo R -e "install.packages(c('shiny', 'rmarkdown'), repos='https://cran.rstudio.com/')"
 
 #RUN chown -R shiny:shiny /srv/shiny-server/
 RUN chmod -R 777 /srv/shiny-server/
-    
+RUN chmod -R 777 /var/log/shiny-server/
+RUN chmod -R 777 /usr/bin/shiny-server.sh
+
 # Make port 3838 available to the world outside this container
 EXPOSE 3838
 
@@ -29,5 +31,5 @@ COPY /shiny-server.conf /etc/shiny-server/shiny-server.conf
 
 
 # Run shiny when the container launches
-# CMD ["/usr/bin/shiny-server.sh"]
-ENTRYPOINT shiny-server.sh
+CMD ["/usr/bin/shiny-server.sh"]
+# ENTRYPOINT shiny-server.sh
