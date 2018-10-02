@@ -15,7 +15,7 @@ shinyServer(
             plot( x = Score, y = Exp1, type = "o", col = "red", main = "Exponential Scoring")
             text( Score, Exp1, round(Exp1, 2), cex=1, pos = 3)
         })
-        
+        output$table<-renderTable(readRDS("mtcars.rds"))
 #        output$table <- renderTable(rbind(Score, NewScore))
     }
 )
