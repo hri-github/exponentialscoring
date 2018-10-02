@@ -14,7 +14,8 @@ shinyUI(pageWithSidebar(
         h4("Formula:"),
         h4("NewScore = MaxScore * (Score / MaxScore)^ExpValue"),
         h4("NewScore = ( (MaxScore + 1) ^ (Score / MaxScore) ) -1"),
-        plotOutput('myExpCurve', width = "100%", height = "600px")
+        plotOutput('myExpCurve', width = "100%", height = "600px"),
+        tableOutput("table")
 #        dataTableOutput('table'),
     )
 ))
