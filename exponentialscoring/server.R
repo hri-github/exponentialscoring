@@ -15,7 +15,19 @@ shinyServer(
             plot( x = Score, y = Exp1, type = "o", col = "red", main = "Exponential Scoring")
             text( Score, Exp1, round(Exp1, 2), cex=1, pos = 3)
         })
-        output$table<-renderTable(readRDS("mtcars.rds"))
+ #       output$table<-renderTable(readRDS("mtcars.rds"))
 #        output$table <- renderTable(rbind(Score, NewScore))
+        mt<-readRDS("mtcars.rds")
+        
+        # Downloadable csv of selected dataset ----
+        output$downloadData <- downloadHandler(
+          filename = function() {
+            paste("report",Sys.time(), ".csv", sep = "")
+          },
+          content = function(file) {
+            write.csv(mt, file, row.names = FALSE)
+          }
+        )  
+        
     }
 )
